@@ -10,11 +10,11 @@ app.use(cookieparser());
 const userRouter = require("./Routers/userRouter.js");
 const planRouter = require("./Routers/planRouter.js");
 const reviewRouter = require("./Routers/reviewRouter.js");
-// const bookingRouter = require("./Routers/bookingRouter.js");
+const bookingRouter = require("./Routers/bookingRouter.js");
 
 
 // app.use("/auth", authRouter); //global middleware function
 app.use("/user", userRouter);
 app.use("/plans", planRouter);
 app.use("/review", reviewRouter);
-// app.use("/booking", bookingRouter);
+app.use("/booking", bookingRouter);
