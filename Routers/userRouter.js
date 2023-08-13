@@ -1,9 +1,11 @@
 const express = require("express");
+const multer = require("multer");
 const {
   getAlluser,
   updateuser,
   deleteuser,
   getuser,
+  updateProfileImage,
 } = require("../controller/usercontroller.js");
 const {
   signup,
@@ -38,10 +40,10 @@ userRouter
 .delete(deleteuser);
 
 //profile pae
-userRouter.use(protectRoute);
-userRouter
-.route("/userprofile")
-.get(getuser);
+// userRouter.use(protectRoute);
+// userRouter
+// .route("/userprofile")
+// .get(getuser);
 
 userRouter
 .route("/forgetpassword")
@@ -50,6 +52,43 @@ userRouter
 userRouter
 .route("/resetpassword/:id")
 .post(resetpassword)
+
+//multer
+
+const multerstorage = multer.diskStorage({
+  destination:function(req,file,cb){
+    cb(null,'/home/sourabh/Desktop/vs code/Backend_Practice/Food-app/public/images');
+  },
+  filename:function (req,file,cb){
+    cb(null, `user-${Dat.now()}.jpeg`)
+  }
+});
+
+const filter = function (req,file,cb) {
+  if(file.mimetype.startsWith("image")) {
+    cb(null,true)
+  }
+  else{
+    cb(new Error("not an image! please upload an image", false))
+  }
+}
+
+const upload = multer({
+  Storage : multerstorage,
+  fileFilter : filter 
+})
+
+userRouter.post('/ProfileImage', upload.single('photo'), updateProfileImage);
+//get request
+userRouter.get('/ProfileImage',function (req, res){ 
+  res.sendFile("/home/sourabh/Desktop/vs code/Backend_Practice/Food-app/multer.html");
+});
+//profile page
+
+userRouter.use(protectRoute);
+userRouter
+.route('/userProfile')
+.get(getuser)
 
 
 //admin specific funtion

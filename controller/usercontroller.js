@@ -96,6 +96,12 @@ module.exports.deleteuser = async function deleteuser(req, res) {
   }
 };
 
+module,exports.updateProfileImage = function updateProfileImage(req,res){
+  res.json({
+    message:"file upload sucessfully"
+  });
+};
+
 // function setcookies(req, res) {
 //     // res.setHeader('set-Cookies','isLoogedIn'=true);
 //     res.cookie("isLoogedIn", true, {
