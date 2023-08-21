@@ -96,7 +96,7 @@ module.exports.deleteuser = async function deleteuser(req, res) {
   }
 };
 
-module,exports.updateProfileImage = function updateProfileImage(req,res){
+module.exports.updateProfileImage = function updateProfileImage(req,res){
   res.json({
     message:"file upload sucessfully"
   });

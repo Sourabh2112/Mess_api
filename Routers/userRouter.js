@@ -57,10 +57,10 @@ userRouter
 
 const multerstorage = multer.diskStorage({
   destination:function(req,file,cb){
-    cb(null,'/home/sourabh/Desktop/vs code/Backend_Practice/Food-app/public/images');
+    cb(null,'public/images');
   },
   filename:function (req,file,cb){
-    cb(null, `user-${Dat.now()}.jpeg`)
+    cb(null, `user-${Date.now()}.jpeg`)
   }
 });
 
