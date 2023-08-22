@@ -1,6 +1,6 @@
 const user_model = require("../models/usermodel.js");
 const plan_model = require("../models/planmodel.js");
-
+const {sendMail} = require("../utility/nodemailer.js")
 const jwt = require("jsonwebtoken");
 // const jwt_key = require("/home/sourabh/Desktop/vs code/Backend_Practice/Food-app/secret.js");
 const jwt_key = 'avbiuehvoiwhefvyaw';
@@ -10,6 +10,7 @@ module.exports.signup = async function signup(req, res) {
   try {
     let dataobj = req.body;
     let user = await user_model.create(dataobj);
+    sendMail("signup",user);
     // console.log("backend", user);
     if (user) {
       res.json({
@@ -125,8 +126,13 @@ module.exports.forgetpassword = async function forgetpassword(req,res) {
     if (user) {
       const resetToken = user.createResetToken();
       // http://abc.com/resetpasswore/resetToken
-      let resetPasswordLink = `${req.protocol}://${req.get('host')}/resetpassord/${resetToken}`
+      let resetPasswordLink = `${req.protocol}://${req.get('host')}/resetpassord/${resetToken}`;
       //send mail to the user by using nodemailer
+      let obj ={
+        resetPasswordLink : resetPasswordLink,
+        email : email
+      }
+      sendMail("resetpassword",obj);
     }
   } catch (err) {
     res.status(500).josn({
